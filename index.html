@@ -2440,6 +2440,8 @@
 
     <!-- Shopify Buy Button SDK -->
     <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
+    <!-- Shopify Configuration -->
+    <script src="shopify-config.js"></script>
     <script>
       // ============================================================
       //  SHOPIFY BOOKING INTEGRATION
@@ -2456,8 +2458,7 @@
       //     - "Rainforest Suite" with variants for dates
       //     - "River View Room" with variants for dates  
       //     - "Garden Villa" with variants for dates
-      //  7. Replace SHOP_CONFIG below with your store details
-      //  8. Replace ROOM_PRODUCTS with your actual Shopify product IDs
+      //  7. Update shopify-config.js with your store details and product IDs
       //  
       //  FOR BOOKING/RESERVATION SPECIFICALLY:
       //  - Use Shopify product variants for date ranges
@@ -2466,19 +2467,6 @@
       //  - The booking bar captures check-in/out dates and passes them
       //    to the Shopify checkout as line item properties
       // ============================================================
-
-      const SHOP_CONFIG = {
-        domain: 'hotel-ptp.myshopify.com',       // TODO: Replace with actual store domain
-        storefrontAccessToken: '39e8d70c7658448783ee53a50c32ad5b',  // TODO: Replace with storefront access token
-      };
-
-      // Map room buttons to Shopify product GIDs
-      // TODO: Replace with actual Shopify product IDs after creating products
-      const ROOM_PRODUCTS = {
-        'Rainforest Suite': 'gid://shopify/Product/10164023984411',
-        'River View Room': 'gid://shopify/Product/10164024901915',
-        'Garden Villa': 'gid://shopify/Product/1016402955497',
-      };
 
       // Helper: get booking bar values
       function getBookingDetails() {
