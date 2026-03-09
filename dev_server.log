@@ -1,0 +1,74 @@
+
+> test-app@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+✓ Ready in 2.3s
+○ Compiling / ...
+You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.
+You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.
+Use the `defaultValue` or `value` props on <select> instead of setting `selected` on <option>.
+An empty string ("") was passed to the src attribute. This may cause the browser to download the whole page again over the network. To fix this, either do not render the element at all or pass null to src instead of an empty string.
+ GET / 200 in 5.1s (compile: 4.7s, render: 402ms)
+ GET /images/dining.png 404 in 1057ms (compile: 634ms, render: 422ms)
+ GET /images/pool.png 404 in 1066ms (compile: 698ms, render: 368ms)
+ GET /images/room-premium.png 404 in 1124ms (compile: 776ms, render: 347ms)
+ GET /images/room-suite.png 404 in 1127ms (compile: 817ms, render: 310ms)
+ GET /images/springs.png 404 in 1143ms (compile: 879ms, render: 264ms)
+ GET /images/hero.png 404 in 1150ms (compile: 905ms, render: 246ms)
+ GET /images/spa.png 404 in 136ms (compile: 16ms, render: 120ms)
+ GET /images/room-suite.png 404 in 455ms (compile: 95ms, render: 360ms)
+ GET /images/springs.png 404 in 460ms (compile: 70ms, render: 390ms)
+ GET /images/hero.png 404 in 464ms (compile: 33ms, render: 431ms)
+ GET /images/room-premium.png 404 in 464ms (compile: 183ms, render: 281ms)
+ GET /images/dining.png 404 in 470ms (compile: 243ms, render: 227ms)
+ GET /images/pool.png 404 in 473ms (compile: 225ms, render: 249ms)
+ GET /images/spa.png 404 in 84ms (compile: 6ms, render: 78ms)
+An empty string ("") was passed to the src attribute. This may cause the browser to download the whole page again over the network. To fix this, either do not render the element at all or pass null to src instead of an empty string.
+ GET /images/hero.png 404 in 131ms (compile: 9ms, render: 122ms)
+ GET /images/springs.png 404 in 257ms (compile: 60ms, render: 197ms)
+ GET / 200 in 518ms (compile: 82ms, render: 436ms)
+ GET /images/pool.png 404 in 203ms (compile: 64ms, render: 140ms)
+ GET /images/room-premium.png 404 in 206ms (compile: 47ms, render: 160ms)
+ GET /images/room-suite.png 404 in 209ms (compile: 22ms, render: 187ms)
+ GET /images/dining.png 404 in 110ms (compile: 8ms, render: 102ms)
+ GET /images/spa.png 404 in 83ms (compile: 19ms, render: 64ms)
+ GET /images/room-premium.png 404 in 286ms (compile: 81ms, render: 205ms)
+ GET /images/room-suite.png 404 in 288ms (compile: 62ms, render: 226ms)
+ GET /images/springs.png 404 in 291ms (compile: 45ms, render: 246ms)
+ GET /images/hero.png 404 in 294ms (compile: 23ms, render: 270ms)
+ GET /images/dining.png 404 in 283ms (compile: 170ms, render: 114ms)
+ GET /images/pool.png 404 in 287ms (compile: 150ms, render: 136ms)
+ GET /images/spa.png 404 in 50ms (compile: 6ms, render: 44ms)
+⨯ ./src/app/layout.tsx:3:1
+Module not found: Can't resolve './globals.css'
+[0m [90m 1 |[39m [36mimport[39m type { [33mMetadata[39m } [36mfrom[39m [32m"next"[39m[33m;[39m
+ [90m 2 |[39m [36mimport[39m { [33mInter[39m } [36mfrom[39m [32m"next/font/google"[39m[33m;[39m
+[31m[1m>[22m[39m[90m 3 |[39m [36mimport[39m [32m"./globals.css"[39m[33m;[39m
+ [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 4 |[39m
+ [90m 5 |[39m [36mconst[39m inter [33m=[39m [33mInter[39m({ subsets[33m:[39m [[32m"latin"[39m] })[33m;[39m
+ [90m 6 |[39m[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/layout.tsx:3:1
+Module not found: Can't resolve './globals.css'
+[0m [90m 1 |[39m [36mimport[39m type { [33mMetadata[39m } [36mfrom[39m [32m"next"[39m[33m;[39m
+ [90m 2 |[39m [36mimport[39m { [33mInter[39m } [36mfrom[39m [32m"next/font/google"[39m[33m;[39m
+[31m[1m>[22m[39m[90m 3 |[39m [36mimport[39m [32m"./globals.css"[39m[33m;[39m
+ [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 4 |[39m
+ [90m 5 |[39m [36mconst[39m inter [33m=[39m [33mInter[39m({ subsets[33m:[39m [[32m"latin"[39m] })[33m;[39m
+ [90m 6 |[39m[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
