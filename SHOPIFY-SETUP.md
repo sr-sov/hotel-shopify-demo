@@ -38,7 +38,7 @@ In **Shopify Admin → Products**, create one product per room:
 
 ### Step 4: Connect to the Website
 
-Open `resort-demo-v2.html` and find this section near the bottom:
+Open `shopify-config.js` and update this section:
 
 ```javascript
 const SHOP_CONFIG = {
@@ -47,7 +47,7 @@ const SHOP_CONFIG = {
 };
 ```
 
-Then update the product IDs:
+Then update the product IDs in the same file:
 
 ```javascript
 const ROOM_PRODUCTS = {

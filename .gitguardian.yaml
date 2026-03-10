@@ -1,0 +1,4 @@
+version: 2
+secret:
+  ignored-matches:
+    - match: 39e8d70c7658448783ee53a50c32ad5b
