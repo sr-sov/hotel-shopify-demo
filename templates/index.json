@@ -20,6 +20,26 @@
     "featured_rooms_94hkFH": {
       "type": "featured-rooms",
       "blocks": {
+        "room_ABy6ix": {
+          "type": "room",
+          "settings": {
+            "product": "river-view-room",
+            "meta1": "👥 2 Guests",
+            "meta2": "📐 85 m²",
+            "meta3": "🌿 Garden View",
+            "badge": "Popular"
+          }
+        },
+        "room_Tn7KDb": {
+          "type": "room",
+          "settings": {
+            "product": "rainforest-suite",
+            "meta1": "👥 2 Guests",
+            "meta2": "📐 85 m²",
+            "meta3": "🌿 Garden View",
+            "badge": "Popular"
+          }
+        },
         "room_KVQRQG": {
           "type": "room",
           "settings": {
@@ -32,6 +52,8 @@
         }
       },
       "block_order": [
+        "room_ABy6ix",
+        "room_Tn7KDb",
         "room_KVQRQG"
       ],
       "name": "Featured Rooms",
