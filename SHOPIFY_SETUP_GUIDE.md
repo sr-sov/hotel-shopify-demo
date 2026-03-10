@@ -79,3 +79,29 @@ To make the sticky header links work smoothly:
    - Name: `Amenities` | Link: `/#amenities`
    - Name: `Experience` | Link: `/#experience`
 3. Because the theme uses a custom hardcoded `<nav>` for the frosted glass effect, the links in the Liquid file currently point directly to these anchors. No further Shopify Admin Menu setup is actually required unless you decide to dynamically generate the links via `linklists.main-menu.links` in the future.
+
+---
+
+## 5. Setting Up Collections
+
+To utilize the new Collection templates:
+1. Go to **Products > Collections**.
+2. **"All Accommodations"**: Create a collection named exactly `All`. Shopify should give this the handle `all`. Set it to automatically pull in all products with the condition `Product price is greater than 0`.
+3. **"Budget Options"**: Create a collection named `Budget`. Shopify should assign the handle `budget`. Set a condition like `Product price is less than $400`.
+4. The theme uses a custom `main-collection.liquid` section to display these elegantly, including dynamic item counts and pagination.
+
+---
+
+## 6. Developer Documentation
+
+### Setup & Local Development
+- **Shopify CLI**: This theme should be developed locally using Shopify CLI (`shopify theme dev`). 
+- **Dependencies**: No 3rd-party CSS frameworks (like Tailwind) or JS libraries (like jQuery) are used. Everything relies on Vanilla CSS and ES6 JavaScript.
+
+### Core Architecture & APIs
+- **Liquid Overrides**: The theme uses native Liquid files but relies heavily on Shopify 2.0 JSON templates (`templates/index.json`, `templates/product.json`, `templates/collection.json`) to allow section modularity in the Admin Customizer.
+- **Product API Drop**: The codebase explicitly uses modern object drop references (e.g., `block.settings.product` returns a full product object, not a string handle) and modern image filters (`image_url`, not `img_url`). If editing `.liquid` files, strictly adhere to the modern Drops API.
+- **CSS Architecture**: All styling logic is maintained inside `assets/theme.css` via CSS Root Variables (`--bg`, `--accent`, etc). The only exception is component-scoped styles loaded at the top of section files (e.g., the grid layouts inside `main-product.liquid`).
+
+### Local vs. Production Nuances
+- **Booking Engine Limitations**: As coded, the HTML Booking Form captures Check-In/Check-Out strings as Line Item Properties. In a local dev environment, this simply adds to cart. In Production, Shopify does *not* natively calculate length-of-stay multpliers for prices. You must either integrate a serverless webhook to mutate cart prices or install a booking app (Sesami/BookThatApp) prior to launch.
