@@ -246,6 +246,20 @@ img {
   color: var(--accent);
 }
 
+.nav-cart-link span {
+  font-size: 11px;
+  background: var(--accent);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 100px;
+  margin-left: 4px;
+}
+
+.nav.scrolled .nav-cart-link span {
+  background: var(--text);
+  color: white;
+}
+
 .nav-cta {
   font-size: 12px;
   font-weight: 600;
