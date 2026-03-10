@@ -585,9 +585,10 @@ img {
 /* === Rooms Grid & Cards (Missing) === */
 .rooms-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 420px));
   gap: 32px;
   margin-top: 48px;
+  justify-content: center;
 }
 
 .room-card {
@@ -598,6 +599,7 @@ img {
   border: 1px solid var(--border-light);
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .room-card:hover {
@@ -625,35 +627,48 @@ img {
 
 .room-card-badge {
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: 20px;
+  left: 20px;
   background: var(--accent);
   color: white;
-  padding: 6px 12px;
+  padding: 8px 16px;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   z-index: 2;
 }
 
-/* Inventory Tag */
+/* Inventory Tag - High Urgency */
 .room-inventory-tag {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(8px);
-  color: #c0392b;
-  padding: 4px 10px;
+  top: 20px;
+  right: 20px;
+  background: #ce2121;
+  color: #fff;
+  padding: 8px 16px;
   border-radius: 100px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  border: 1px solid rgba(192, 57, 43, 0.1);
   z-index: 2;
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 12px rgba(206, 33, 33, 0.4);
+  animation: pulseUrgency 2s infinite;
+}
+
+@keyframes pulseUrgency {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .room-card-body {
