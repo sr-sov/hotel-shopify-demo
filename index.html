@@ -2467,9 +2467,11 @@
       //    to the Shopify checkout as line item properties
       // ============================================================
 
+      // Use environment variables or configuration object injected by the server/build process.
+      // Fallback to empty strings to prevent hardcoded secrets from leaking.
       const SHOP_CONFIG = {
-        domain: 'hotel-ptp.myshopify.com',       // TODO: Replace with actual store domain
-        storefrontAccessToken: '39e8d70c7658448783ee53a50c32ad5b',  // TODO: Replace with storefront access token
+        domain: window.ENV?.SHOPIFY_DOMAIN || '',
+        storefrontAccessToken: window.ENV?.SHOPIFY_STOREFRONT_TOKEN || '',
       };
 
       // Map room buttons to Shopify product GIDs
