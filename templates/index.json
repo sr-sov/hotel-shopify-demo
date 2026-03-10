@@ -23,10 +23,7 @@
         "room_KVQRQG": {
           "type": "room",
           "settings": {
-            "product": "",
-            "title": "Test",
-            "desc": "asd",
-            "price": "$420",
+            "product": "garden-villa",
             "meta1": "👥 2 Guests",
             "meta2": "📐 85 m²",
             "meta3": "🌿 Garden View",
