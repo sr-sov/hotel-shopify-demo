@@ -116,6 +116,12 @@
       scroll-padding-top: 80px;
     }
 
+    /* === Accessibility === */
+    *:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
     body {
       font-family: var(--font-body);
       background: var(--bg);
@@ -2360,7 +2366,7 @@
   </section>
 
   <!-- Premium Room Modal -->
-  <div class="room-modal" id="roomModal">
+  <div class="room-modal" id="roomModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-header">
       <div style="font-weight: 600; font-size: 15px; letter-spacing: 0.05em; text-transform: uppercase;">Room Details
       </div>
@@ -2391,14 +2397,14 @@
   </div>
 
   <!-- Photo Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lightboxClose">×</button>
-    <img id="lightboxImg" src="" alt="Photo">
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image Gallery Lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close Lightbox">×</button>
+    <img id="lightboxImg" src="" alt="Expanded Image">
     <div class="lightbox-nav">
-      <button id="lightboxPrev">← Previous</button>
-      <button id="lightboxNext">Next →</button>
+      <button id="lightboxPrev" aria-label="Previous Image">← Previous</button>
+      <button id="lightboxNext" aria-label="Next Image">Next →</button>
     </div>
-    <div class="lightbox-counter" id="lightboxCounter"></div>
+    <div class="lightbox-counter" id="lightboxCounter" aria-live="polite"></div>
   </div>
 
   <!-- Footer -->
@@ -2584,6 +2590,7 @@
         currentLightboxIndex = startIndex || 0;
         updateLightbox();
         lightbox.classList.add('active');
+        document.getElementById('lightboxClose').focus();
       }
 
       function updateLightbox() {
@@ -2591,16 +2598,24 @@
         lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${currentLightboxImages.length}`;
       }
 
-      document.getElementById('lightboxClose').addEventListener('click', () => lightbox.classList.remove('active'));
-      document.getElementById('lightboxPrev').addEventListener('click', () => {
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+      }
+
+      function lightboxPrevImage() {
         currentLightboxIndex = (currentLightboxIndex - 1 + currentLightboxImages.length) % currentLightboxImages.length;
         updateLightbox();
-      });
-      document.getElementById('lightboxNext').addEventListener('click', () => {
+      }
+
+      function lightboxNextImage() {
         currentLightboxIndex = (currentLightboxIndex + 1) % currentLightboxImages.length;
         updateLightbox();
-      });
-      lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+      }
+
+      document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+      document.getElementById('lightboxPrev').addEventListener('click', lightboxPrevImage);
+      document.getElementById('lightboxNext').addEventListener('click', lightboxNextImage);
+      lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
 
       function openRoomModal(roomName) {
         const data = ROOM_DATA[roomName];
@@ -2648,6 +2663,14 @@
           img.addEventListener('click', () => {
             openLightbox(data.images, parseInt(img.dataset.index));
           });
+          // Keyboard accessibility for gallery images
+          img.tabIndex = 0;
+          img.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              openLightbox(data.images, parseInt(img.dataset.index));
+            }
+          });
         });
 
         roomModal.classList.add('active');
@@ -2655,6 +2678,15 @@
         // Hide demo banner when modal is open
         const banner = document.getElementById('demoBanner');
         if (banner) banner.style.zIndex = '0';
+        document.getElementById('closeModalBtn').focus();
+      }
+
+      function closeRoomModal() {
+        roomModal.classList.remove('active');
+        document.body.style.overflow = '';
+        // Restore demo banner
+        const banner = document.getElementById('demoBanner');
+        if (banner) banner.style.zIndex = '200';
       }
 
       // View All Photos button
@@ -2663,12 +2695,17 @@
         if (data) openLightbox(data.images, 0);
       });
 
-      document.getElementById('closeModalBtn').addEventListener('click', () => {
-        roomModal.classList.remove('active');
-        document.body.style.overflow = '';
-        // Restore demo banner
-        const banner = document.getElementById('demoBanner');
-        if (banner) banner.style.zIndex = '200';
+      document.getElementById('closeModalBtn').addEventListener('click', closeRoomModal);
+
+      // Global keyboard event listener for Modals/Lightboxes
+      document.addEventListener('keydown', (e) => {
+        if (lightbox.classList.contains('active')) {
+          if (e.key === 'Escape') closeLightbox();
+          if (e.key === 'ArrowLeft') lightboxPrevImage();
+          if (e.key === 'ArrowRight') lightboxNextImage();
+        } else if (roomModal.classList.contains('active')) {
+          if (e.key === 'Escape') closeRoomModal();
+        }
       });
 
       // Attach Modal to room cards explicitly (instead of instant checkout)
