@@ -26,8 +26,11 @@
             
             {% if product != blank and product.featured_image %}
               <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}" loading="lazy">
-              {% if product.available and product.variants.first.inventory_quantity > 0 and product.variants.first.inventory_quantity < 5 %}
-                <div class="room-inventory-tag">Only {{ product.variants.first.inventory_quantity }} left</div>
+              {% assign inventory_threshold = section.settings.inventory_threshold | default: 5 %}
+              {% if product.available and product.variants.first.inventory_quantity > 0 and product.variants.first.inventory_quantity <= inventory_threshold %}
+                <div class="room-inventory-tag">
+                  {{ section.settings.inventory_badge_text | replace: '{{ count }}', product.variants.first.inventory_quantity }}
+                </div>
               {% endif %}
             {% else %}
               {{ 'product-1' | placeholder_svg_tag: 'room-card-image' }}
@@ -106,6 +109,27 @@
       "id": "show_view_all",
       "label": "Show 'View All' Button",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Inventory Urgency"
+    },
+    {
+      "type": "range",
+      "id": "inventory_threshold",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "label": "Inventory Threshold",
+      "info": "Display badge when stock is at or below this number.",
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "inventory_badge_text",
+      "label": "Inventory Badge Text",
+      "info": "Use {{ count }} for the real-time number.",
+      "default": "Only {{ count }} left"
     }
   ],
   "blocks": [
