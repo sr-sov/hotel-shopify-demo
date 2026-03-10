@@ -1,0 +1,5 @@
+Refine the UI. 
+Some details still feels cheap. 
+Improve spacing and layout. 
+Also, improve the content quality 
+of the templates(e.g. adding how many stocks left per room type)

@@ -104,4 +104,22 @@ To utilize the new Collection templates:
 - **CSS Architecture**: All styling logic is maintained inside `assets/theme.css` via CSS Root Variables (`--bg`, `--accent`, etc). The only exception is component-scoped styles loaded at the top of section files (e.g., the grid layouts inside `main-product.liquid`).
 
 ### Local vs. Production Nuances
-- **Booking Engine Limitations**: As coded, the HTML Booking Form captures Check-In/Check-Out strings as Line Item Properties. In a local dev environment, this simply adds to cart. In Production, Shopify does *not* natively calculate length-of-stay multpliers for prices. You must either integrate a serverless webhook to mutate cart prices or install a booking app (Sesami/BookThatApp) prior to launch.
+- **Booking Engine Limitations**: As coded, the HTML Booking Form captures Check-In/Check-Out strings as Line Item Properties. In a local dev environment, this simply adds to cart. In Production, Shopify does *not* natively calculate length-of-stay multipliers for prices. You must either integrate a serverless webhook to mutate cart prices or install a booking app (Sesami/BookThatApp) prior to launch.
+
+---
+
+## 7. Understanding "Date-Based" Availability
+
+This is a critical nuance for any hotel builder using Shopify natively.
+
+### 👤 For the User (How to Manage)
+Native Shopify inventory is **Unit-based**, not **Date-based**. 
+- If you set your "Rainforest Suite" inventory to **5**, Shopify allows **5 total sales**.
+- **The Gap**: Shopify does *not* know if those 5 sales are for the same night or 5 different nights. It just counts down the units.
+- **Workflow**: When you receive an order, you will see the requested dates in the order details. If a room is fully committed for those dates on your external master calendar, you would manually refund or contact the guest. This is a "manual-first" growth strategy until you reach high volume.
+
+### 🛠️ For the Developer (How to Solve)
+To bridge the "Unit vs. Date" gap in a high-traffic production environment:
+1. **The 'App' Route**: Install **Sesami** or **BookThatApp**. These apps create a "Calendar Sales Channel". They replace the standard Shopify inventory check with a real-time availability lookup against a date matrix.
+2. **The 'Headless' Route**: Build a custom middleware (e.g., via Cloudflare Workers or Next.js API) that checks a separate database (like Supabase or Sanity) where you track specific date occupancy. You would use the Shopify Storefront API to toggle the "Sold Out" state based on that custom logic.
+3. **The 'Script' Route**: If on Shopify Plus, you can use **Shopify Scripts** to dynamically multiply the `line_price` by the `computed_nights_count` (Line Item Property) at the checkout stage.

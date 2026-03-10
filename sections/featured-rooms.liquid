@@ -26,6 +26,9 @@
             
             {% if product != blank and product.featured_image %}
               <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}" loading="lazy">
+              {% if product.available and product.variants.first.inventory_quantity > 0 and product.variants.first.inventory_quantity < 5 %}
+                <div class="room-inventory-tag">Only {{ product.variants.first.inventory_quantity }} left</div>
+              {% endif %}
             {% else %}
               {{ 'product-1' | placeholder_svg_tag: 'room-card-image' }}
             {% endif %}

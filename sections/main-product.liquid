@@ -132,17 +132,17 @@
 }
 
 .urgency-banner {
-  background: #fdf3f3;
-  color: #c0392b;
-  padding: 12px 16px;
+  background: var(--accent-light);
+  color: var(--accent);
+  padding: 16px 20px;
   border-radius: var(--radius);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 24px;
-  border: 1px solid #fadcdc;
+  gap: 12px;
+  margin-bottom: 32px;
+  border: 1px solid var(--border-light);
 }
 
 .urgency-icon { font-size: 18px; }
@@ -151,31 +151,34 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .meta-tag {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background: var(--bg-warm);
-  border-radius: 4px;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 100px;
   font-size: 13px;
   font-weight: 500;
   color: var(--text-secondary);
 }
 
 .room-desc {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.8;
-  color: var(--text);
+  color: var(--text-secondary);
+  font-weight: 300;
 }
 
 .room-details-section h3 {
   font-family: var(--font-display);
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: 26px;
+  margin-bottom: 24px;
+  font-weight: 400;
 }
 
 .amenities-list {
@@ -244,21 +247,31 @@
 .booking-form input,
 .booking-form select {
   width: 100%;
-  padding: 12px 16px;
+  padding: 14px 18px;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   font-family: var(--font-body);
-  font-size: 15px;
-  background: var(--white);
+  font-size: 14px;
+  background: var(--bg-alt);
   color: var(--text);
   transition: all var(--transition);
+  cursor: pointer;
+  appearance: none;
+}
+
+.booking-form select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a6b52' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 14px;
 }
 
 .booking-form input:focus,
 .booking-form select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(46, 125, 91, 0.1);
+  background: var(--white);
+  box-shadow: 0 0 0 4px var(--accent-light);
 }
 
 .btn-book {
@@ -355,9 +368,14 @@
     <!-- Left Column: Details -->
     <div class="room-details">
       <!-- Urgency Banner (Agoda Style) -->
+      {% assign inventory = product.variants.first.inventory_quantity %}
       <div class="urgency-banner">
-        <span class="urgency-icon">🔥</span>
-        In high demand! Only 2 rooms left on our site for your selected dates.
+        <span class="urgency-icon">✨</span>
+        {% if inventory > 0 and inventory < 5 %}
+          Only {{ inventory }} rooms left on our site for your selected dates. **High demand!**
+        {% else %}
+          One of our most-loved suites. People usually book this 3 months in advance.
+        {% endif %}
       </div>
 
       <div class="room-details-section">
@@ -421,7 +439,9 @@
             </select>
           </div>
 
-          <button type="submit" class="btn-book">Reserve</button>
+          <button type="submit" class="btn-book" {% unless product.available %}disabled{% endunless %}>
+            {% if product.available %}Reserve{% else %}Sold Out{% endif %}
+          </button>
           
           <div class="trust-markers">
             <div class="trust-marker">
