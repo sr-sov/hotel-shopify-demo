@@ -136,6 +136,11 @@
       color: white;
     }
 
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
     img {
       max-width: 100%;
       display: block;
@@ -1966,7 +1971,7 @@
     <!-- Booking Bar -->
     <div class="booking-bar" id="book">
       <div class="booking-field">
-        <label>Room Type</label>
+        <label for="bookingRoomType">Room Type</label>
         <select id="bookingRoomType">
           <option value="Rainforest Suite" data-capacity="2">Rainforest Suite (max 2)</option>
           <option value="River View Room" data-capacity="2">River View Room (max 2)</option>
@@ -1974,15 +1979,15 @@
         </select>
       </div>
       <div class="booking-field">
-        <label>Check In</label>
+        <label for="bookingCheckin">Check In</label>
         <input type="date" id="bookingCheckin" value="2026-03-14">
       </div>
       <div class="booking-field">
-        <label>Check Out</label>
+        <label for="bookingCheckout">Check Out</label>
         <input type="date" id="bookingCheckout" value="2026-03-15">
       </div>
       <div class="booking-field">
-        <label>Guests</label>
+        <label for="bookingGuests">Guests</label>
         <select id="bookingGuests">
           <option value="1">1 Guest</option>
           <option value="2" selected>2 Guests</option>
@@ -1995,7 +2000,7 @@
         </select>
       </div>
       <div class="booking-field">
-        <label>Promo Code</label>
+        <label for="bookingPromo">Promo Code</label>
         <input type="text" id="bookingPromo" placeholder="Optional">
       </div>
       <button class="booking-btn" id="shopifyBookBtn">Book Now</button>
@@ -2392,7 +2397,7 @@
 
   <!-- Photo Lightbox -->
   <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lightboxClose">×</button>
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close photo lightbox">×</button>
     <img id="lightboxImg" src="" alt="Photo">
     <div class="lightbox-nav">
       <button id="lightboxPrev">← Previous</button>
@@ -2684,10 +2689,25 @@
       });
 
       // Attach actual Shopify checkout to the button INSIDE the modal
-      document.getElementById('modalCheckoutBtn').addEventListener('click', () => {
+      document.getElementById('modalCheckoutBtn').addEventListener('click', async (e) => {
         if (activeRoomForCheckout) {
-          const productId = ROOM_PRODUCTS[activeRoomForCheckout];
-          createShopifyCheckout(productId, activeRoomForCheckout);
+          const btn = e.target;
+          const originalText = btn.textContent;
+          btn.textContent = 'Processing...';
+          btn.disabled = true;
+          btn.style.opacity = '0.7';
+          btn.style.cursor = 'wait';
+
+          try {
+            const productId = ROOM_PRODUCTS[activeRoomForCheckout];
+            await createShopifyCheckout(productId, activeRoomForCheckout);
+          } finally {
+            // Restore button state
+            btn.textContent = originalText;
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            btn.style.cursor = 'pointer';
+          }
         }
       });
 
