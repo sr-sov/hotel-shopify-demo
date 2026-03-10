@@ -123,3 +123,29 @@ To bridge the "Unit vs. Date" gap in a high-traffic production environment:
 1. **The 'App' Route**: Install **Sesami** or **BookThatApp**. These apps create a "Calendar Sales Channel". They replace the standard Shopify inventory check with a real-time availability lookup against a date matrix.
 2. **The 'Headless' Route**: Build a custom middleware (e.g., via Cloudflare Workers or Next.js API) that checks a separate database (like Supabase or Sanity) where you track specific date occupancy. You would use the Shopify Storefront API to toggle the "Sold Out" state based on that custom logic.
 3. **The 'Script' Route**: If on Shopify Plus, you can use **Shopify Scripts** to dynamically multiply the `line_price` by the `computed_nights_count` (Line Item Property) at the checkout stage.
+
+---
+
+### Section 8: Editing Content (Theme Editor vs. Metafields)
+We have made the system "World Class" by ensuring almost no text is permanently hardcoded.
+
+#### 1. Global/Template Content (Theme Editor)
+Use the **Online Store > Themes > Customize** editor to change:
+*   **Urgency Banner Text:** Change the "High Demand" or "Most Loved" messages globally.
+*   **Booking Labels:** Edit "Check-In", "Check-Out", or button text like "Reserve".
+*   **Default Meta Tags:** Set the default icons and text for rooms (e.g., 📐 85 m²).
+
+#### 2. Unique Room Data (Metafields)
+To make rooms unique (e.g., one has a "River View" and another a "Forest View") without creating new templates:
+1.  Go to **Settings > Custom Data > Products**.
+2.  Add a **Metafield** named `custom.view` (Single line text) and `custom.size` (Single line text).
+3.  In the Product page in Admin, scroll to the bottom to fill these in for each room.
+4.  The theme will automatically prioritize these over the generic template defaults.
+
+---
+
+### Section 9: The "Featured Rooms" Grid
+You can now add up to **4 rooms** on the homepage.
+*   **How to edit:** Click on the "Featured Rooms" section in the theme editor.
+*   **Room Cards:** Each room card can have its own "Badge" (e.g., "Sold Out Soon" or "Eco-Choice").
+*   **Inventory Tag:** The "Only X left" pill appears automatically when inventory falls below 5.

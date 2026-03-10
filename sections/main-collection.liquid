@@ -97,9 +97,21 @@
                 </p>
                 
                 <div class="room-card-meta">
-                  <!-- In a real scenario, use Product Metafields -->
-                  <span>👥 {{ product.metafields.custom.guests | default: '2 Guests' }}</span>
-                  <span>🌿 {{ product.metafields.custom.view | default: 'Nature View' }}</span>
+                  {% if product.metafields.custom.guests != blank %}
+                    <span>👥 {{ product.metafields.custom.guests }}</span>
+                  {% endif %}
+                  {% if product.metafields.custom.view != blank %}
+                    <span>🌿 {{ product.metafields.custom.view }}</span>
+                  {% endif %}
+                  {% if product.metafields.custom.size != blank %}
+                    <span>📐 {{ product.metafields.custom.size }}</span>
+                  {% endif %}
+                  
+                  {% comment %} Default fallback if no metafields {% endcomment %}
+                  {% if product.metafields.custom == empty %}
+                    <span>👥 2 Guests</span>
+                    <span>🌿 Nature View</span>
+                  {% endif %}
                 </div>
                 
                 <div class="room-card-footer">

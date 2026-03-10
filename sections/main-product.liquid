@@ -459,25 +459,45 @@
       <!-- Urgency Banner (Agoda Style) -->
       {% assign inventory = product.variants.first.inventory_quantity %}
       <div class="urgency-banner">
-        <span class="urgency-icon">✨</span>
+        <span class="urgency-icon">{{ section.settings.urgency_icon }}</span>
         {% if inventory > 0 and inventory < 5 %}
-          Only {{ inventory }} rooms left on our site for your selected dates. **High demand!**
+          {{ section.settings.urgency_high_demand | replace: '{{ count }}', inventory | markdownlib }}
         {% else %}
-          One of our most-loved suites. People usually book this 3 months in advance.
+          {{ section.settings.urgency_low_demand }}
         {% endif %}
       </div>
 
       <div class="room-details-section">
         <div class="room-meta-tags">
-          <div class="meta-tag"><span>📐</span> {{ section.settings.size_text | default: "85 m²" }}</div>
-          <div class="meta-tag"><span>👥</span> Up to 2 Guests</div>
-          <div class="meta-tag"><span>🛏️</span> 1 King Bed</div>
-          <div class="meta-tag"><span>🌿</span> Nature View</div>
+          {% comment %} Prioritize Metafields (Professional Data) {% endcomment %}
+          {% if product.metafields.custom.size != blank %}
+            <div class="meta-tag"><span>📐</span> {{ product.metafields.custom.size }}</div>
+          {% endif %}
+          {% if product.metafields.custom.guests != blank %}
+            <div class="meta-tag"><span>👥</span> {{ product.metafields.custom.guests }}</div>
+          {% endif %}
+          {% if product.metafields.custom.beds != blank %}
+            <div class="meta-tag"><span>🛏️</span> {{ product.metafields.custom.beds }}</div>
+          {% endif %}
+          {% if product.metafields.custom.view != blank %}
+            <div class="meta-tag"><span>🌿</span> {{ product.metafields.custom.view }}</div>
+          {% endif %}
+
+          {% comment %} Fallback to Editor Blocks if Metafields missing {% endcomment %}
+          {% for block in section.blocks %}
+            {% if block.type == 'meta_tag' %}
+              {% assign lower_text = block.settings.text | downcase %}
+              {% comment %} Skip if we already showed a metafield version (simple dedupe) {% endcomment %}
+              <div class="meta-tag" {{ block.shopify_attributes }}>
+                <span>{{ block.settings.icon }}</span> {{ block.settings.text }}
+              </div>
+            {% endif %}
+          {% endfor %}
         </div>
         
-        <h3>About this space</h3>
+        <h3>{{ section.settings.details_title }}</h3>
         <div class="room-desc">
-          {{ product.description | default: "<p>Stay in the heart of the rainforest. This beautifully appointed suite features floor-to-ceiling windows, a private plunge pool, and sustainable luxury finishes designed to blend perfectly with the natural surroundings. Experience unparalleled tranquility while maintaining access to world-class resort amenities.</p>" }}
+          {{ product.description | default: "<p>Please add a product description in the Shopify admin.</p>" }}
         </div>
       </div>
 
@@ -501,8 +521,8 @@
       <div class="booking-widget">
         <div class="widget-price-row">
           <div>
-            <span class="widget-price">{{ product.price | money | default: "$420" }}</span>
-            <span class="widget-per">avg/night</span>
+            <span class="widget-price">{{ product.price | money }}</span>
+            <span class="widget-per">{{ section.settings.price_suffix }}</span>
           </div>
         </div>
 
@@ -511,17 +531,17 @@
           
           <div style="display: flex; gap: 12px;">
             <div class="input-group" style="flex: 1;">
-              <label for="check-in">Check-In</label>
+              <label for="check-in">{{ section.settings.checkin_label }}</label>
               <input type="date" id="check-in" name="properties[Check-in]" required>
             </div>
             <div class="input-group" style="flex: 1;">
-              <label for="check-out">Check-Out</label>
+              <label for="check-out">{{ section.settings.checkout_label }}</label>
               <input type="date" id="check-out" name="properties[Check-out]" required>
             </div>
           </div>
 
           <div class="input-group">
-            <label for="guests">Guests</label>
+            <label for="guests">{{ section.settings.guests_label }}</label>
             <select id="guests" name="properties[Guests]">
               <option value="1 Adult">1 Adult</option>
               <option value="2 Adults" selected>2 Adults</option>
@@ -529,18 +549,20 @@
           </div>
 
           <button type="submit" class="btn-book" {% unless product.available %}disabled{% endunless %}>
-            {% if product.available %}Reserve{% else %}Sold Out{% endif %}
+            {% if product.available %}{{ section.settings.btn_text_available }}{% else %}{{ section.settings.btn_text_sold_out }}{% endif %}
           </button>
           
           <div class="trust-markers">
-            <div class="trust-marker">
-              <span>✓</span> <span><strong>Free cancellation</strong> up to 48 hours before</span>
-            </div>
-            <div class="trust-marker">
-              <span class="green">✓</span> <span class="green">Includes breakfast</span>
-            </div>
+            {% for block in section.blocks %}
+              {% if block.type == 'trust_marker' %}
+                <div class="trust-marker" {{ block.shopify_attributes }}>
+                  <span class="{% if block.settings.is_accent %}green{% endif %}">{{ block.settings.icon }}</span> 
+                  <span class="{% if block.settings.is_accent %}green{% endif %}">{{ block.settings.text }}</span>
+                </div>
+              {% endif %}
+            {% endfor %}
             <div class="trust-marker" style="margin-top: 16px; justify-content: center; font-size: 12px;">
-              You won't be charged yet
+              {{ section.settings.trust_not_charged }}
             </div>
           </div>
         {% endform %}
@@ -626,15 +648,172 @@
   "name": "Product Layout - Hotel UX",
   "settings": [
     {
+      "type": "header",
+      "content": "Urgency Banner"
+    },
+    {
       "type": "text",
-      "id": "size_text",
-      "label": "Room Size Meta",
-      "default": "85 m²"
+      "id": "urgency_icon",
+      "label": "Urgency Icon",
+      "default": "✨"
+    },
+    {
+      "type": "textarea",
+      "id": "urgency_high_demand",
+      "label": "High Demand Text",
+      "info": "Use {{ count }} for remaining inventory.",
+      "default": "Only {{ count }} rooms left on our site for your selected dates. **High demand!**"
+    },
+    {
+      "type": "textarea",
+      "id": "urgency_low_demand",
+      "label": "General Popularity Text",
+      "default": "One of our most-loved suites. People usually book this 3 months in advance."
+    },
+    {
+      "type": "header",
+      "content": "Room Information"
+    },
+    {
+      "type": "text",
+      "id": "details_title",
+      "label": "Details Section Title",
+      "default": "About this space"
+    },
+    {
+      "type": "header",
+      "content": "Booking Sidebar"
+    },
+    {
+      "type": "text",
+      "id": "price_suffix",
+      "label": "Price Suffix",
+      "default": "avg/night"
+    },
+    {
+      "type": "text",
+      "id": "checkin_label",
+      "label": "Check-In Label",
+      "default": "Check-In"
+    },
+    {
+      "type": "text",
+      "id": "checkout_label",
+      "label": "Check-Out Label",
+      "default": "Check-Out"
+    },
+    {
+      "type": "text",
+      "id": "guests_label",
+      "label": "Guests Label",
+      "default": "Guests"
+    },
+    {
+      "type": "text",
+      "id": "btn_text_available",
+      "label": "Button Text (Available)",
+      "default": "Reserve"
+    },
+    {
+      "type": "text",
+      "id": "btn_text_sold_out",
+      "label": "Button Text (Sold Out)",
+      "default": "Sold Out"
+    },
+    {
+      "type": "text",
+      "id": "trust_not_charged",
+      "label": "Trust Text (Not Charged)",
+      "default": "You won't be charged yet"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "meta_tag",
+      "name": "Meta Tag",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "📐"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "85 m²"
+        }
+      ]
+    },
+    {
+      "type": "trust_marker",
+      "name": "Trust Marker",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "✓"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free cancellation"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_accent",
+          "label": "Use Accent Color",
+          "default": false
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Product Layout - Hotel UX"
+      "name": "Product Layout - Hotel UX",
+      "blocks": [
+        {
+          "type": "meta_tag",
+          "settings": {
+            "icon": "📐",
+            "text": "85 m²"
+          }
+        },
+        {
+          "type": "meta_tag",
+          "settings": {
+            "icon": "👥",
+            "text": "Up to 2 Guests"
+          }
+        },
+        {
+          "type": "meta_tag",
+          "settings": {
+            "icon": "🛏️",
+            "text": "1 King Bed"
+          }
+        },
+        {
+          "type": "trust_marker",
+          "settings": {
+            "icon": "✓",
+            "text": "Free cancellation up to 48 hours before"
+          }
+        },
+        {
+          "type": "trust_marker",
+          "settings": {
+            "icon": "✓",
+            "text": "Includes breakfast",
+            "is_accent": true
+          }
+        }
+      ]
     }
   ]
 }
