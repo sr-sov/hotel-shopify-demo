@@ -211,7 +211,7 @@ img {
   font-family: var(--font-display);
   font-size: 24px;
   font-weight: 700;
-  color: white;
+  color: var(--text);
   letter-spacing: 0.02em;
   transition: color var(--transition);
 }
@@ -227,8 +227,8 @@ img {
 
 .nav-links a {
   font-size: 13px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  color: var(--text-secondary);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   transition: color var(--transition);
@@ -239,7 +239,7 @@ img {
 }
 
 .nav-links a:hover {
-  color: white;
+  color: var(--accent);
 }
 
 .nav.scrolled .nav-links a:hover {
@@ -248,7 +248,7 @@ img {
 
 .nav-cart-link span {
   font-size: 11px;
-  background: var(--accent);
+  background: var(--text);
   color: white;
   padding: 2px 6px;
   border-radius: 100px;
