@@ -2623,15 +2623,37 @@
         document.getElementById('modalPrice').textContent = data.price;
         document.getElementById('modalDesc').textContent = data.desc;
 
-        document.getElementById('modalMeta').innerHTML = `
-          <span>👥 ${data.guests}</span>
-          <span>📐 ${data.size}</span>
-          <span>🌿 ${data.view}</span>
-        `;
+        const metaEl = document.getElementById('modalMeta');
+        metaEl.textContent = '';
+        const metaItems = [
+          { icon: '👥', text: data.guests },
+          { icon: '📐', text: data.size },
+          { icon: '🌿', text: data.view }
+        ];
+        metaItems.forEach(item => {
+          const span = document.createElement('span');
+          span.textContent = `${item.icon} ${item.text}`;
+          metaEl.appendChild(span);
+        });
 
         const galleryEl = document.getElementById('modalGallery');
-        galleryEl.innerHTML = data.images.map((img, i) => `<img src="${img}" alt="${roomName}" data-index="${i}">`).join('');
-        document.getElementById('modalAmenities').innerHTML = data.features.map(f => `<div class="amenity-item">${f}</div>`).join('');
+        galleryEl.textContent = '';
+        data.images.forEach((img, i) => {
+          const imgEl = document.createElement('img');
+          imgEl.src = img;
+          imgEl.alt = roomName;
+          imgEl.dataset.index = i;
+          galleryEl.appendChild(imgEl);
+        });
+
+        const amenitiesEl = document.getElementById('modalAmenities');
+        amenitiesEl.textContent = '';
+        data.features.forEach(f => {
+          const div = document.createElement('div');
+          div.className = 'amenity-item';
+          div.textContent = f;
+          amenitiesEl.appendChild(div);
+        });
 
         // Make gallery images open lightbox
         galleryEl.querySelectorAll('img').forEach(img => {
