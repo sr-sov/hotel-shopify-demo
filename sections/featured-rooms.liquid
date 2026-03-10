@@ -26,8 +26,6 @@
             
             {% if product != blank and product.featured_image %}
               <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}" loading="lazy">
-            {% elsif block.settings.image %}
-              <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title }}" loading="lazy">
             {% else %}
               {{ 'product-1' | placeholder_svg_tag: 'room-card-image' }}
             {% endif %}
@@ -36,7 +34,7 @@
           <div class="room-card-body">
             <h3 class="room-card-name">
               <a href="{% if product != blank %}{{ product.url }}{% else %}#{% endif %}">
-                {% if product != blank %}{{ product.title }}{% else %}{{ block.settings.title }}{% endif %}
+                {% if product != blank %}{{ product.title }}{% else %}Select a Product{% endif %}
               </a>
             </h3>
             
@@ -44,7 +42,7 @@
               {% if product != blank and product.description != blank %}
                 {{ product.description | strip_html | truncatewords: 20 }}
               {% else %}
-                {{ block.settings.desc }}
+                Please select a product with a description.
               {% endif %}
             </p>
             
@@ -59,7 +57,7 @@
                 {% if product != blank %}
                   {{ product.price | money }} <span>/ night</span>
                 {% else %}
-                  {{ block.settings.price }} <span>/ night</span>
+                  $0.00 <span>/ night</span>
                 {% endif %}
               </div>
               <a href="{% if product != blank %}{{ product.url }}{% else %}#{% endif %}" class="room-book-btn">Book</a>
@@ -70,8 +68,9 @@
     </div>
 
     {% if section.settings.show_view_all %}
-      <div class="rooms-link">
+      <div class="rooms-link" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
         <a href="/collections/all" class="btn btn-outline">Explore All Accommodations</a>
+        <a href="/collections/budget" class="btn btn-outline">Explore Budget Options</a>
       </div>
     {% endif %}
   </div>
@@ -116,33 +115,6 @@
           "type": "product",
           "id": "product",
           "label": "Select Product (Room)"
-        },
-        {
-          "type": "header",
-          "content": "Fallback Content (if no product selected)"
-        },
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "Rainforest Suite"
-        },
-        {
-          "type": "textarea",
-          "id": "desc",
-          "label": "Description",
-          "default": "Floor-to-ceiling windows overlooking the canopy."
-        },
-        {
-          "type": "text",
-          "id": "price",
-          "label": "Price string",
-          "default": "$420"
         },
         {
           "type": "header",
