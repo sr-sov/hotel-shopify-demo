@@ -63,10 +63,59 @@
         "desc": "Discover our collection of thoughtfully designed villas and suites.",
         "show_view_all": true
       }
+    },
+    "amenities_pMBWxQ": {
+      "type": "amenities",
+      "blocks": {
+        "amenity_EQ6mm6": {
+          "type": "amenity",
+          "settings": {
+            "icon": "🧖",
+            "title": "Spa & Wellness",
+            "desc": "Full-service spa with traditional and modern treatments in a rainforest setting"
+          }
+        },
+        "amenity_HKeNBV": {
+          "type": "amenity",
+          "settings": {
+            "icon": "🏊",
+            "title": "Infinity Pool",
+            "desc": "Heated infinity pool overlooking the valley with poolside dining service"
+          }
+        },
+        "amenity_XJz9B3": {
+          "type": "amenity",
+          "settings": {
+            "icon": "🍽️",
+            "title": "Fine Dining",
+            "desc": "Farm-to-table restaurant featuring seasonal menus from local ingredients"
+          }
+        },
+        "amenity_DD98BK": {
+          "type": "amenity",
+          "settings": {
+            "icon": "🌄",
+            "title": "Guided Tours",
+            "desc": "Curated nature walks, waterfall hikes, and cultural experiences with local guides"
+          }
+        }
+      },
+      "block_order": [
+        "amenity_EQ6mm6",
+        "amenity_HKeNBV",
+        "amenity_XJz9B3",
+        "amenity_DD98BK"
+      ],
+      "name": "Amenities Grid",
+      "settings": {
+        "tag": "Amenities & Wellness",
+        "title": "Everything You Need, Nothing You Don't"
+      }
     }
   },
   "order": [
     "hero",
-    "featured_rooms_94hkFH"
+    "featured_rooms_94hkFH",
+    "amenities_pMBWxQ"
   ]
 }
