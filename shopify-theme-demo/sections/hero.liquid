@@ -1,0 +1,73 @@
+<section class="hero-section" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('{{ section.settings.image | img_url: '2000x' }}');">
+  <div class="hero-content">
+    <h1>{{ section.settings.heading }}</h1>
+    <p>{{ section.settings.subheading }}</p>
+    <a href="{{ section.settings.button_link }}" class="btn">{{ section.settings.button_text }}</a>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    height: 80vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+  }
+  .hero-content h1 { font-size: 3.5rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 2px; }
+  .hero-content p { font-size: 1.25rem; margin-bottom: 2rem; max-width: 600px; }
+  .btn {
+    background: var(--accent-color);
+    color: white;
+    padding: 15px 40px;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: background 0.3s;
+  }
+  .btn:hover { background: #8e724a; }
+</style>
+
+{% schema %}
+{
+  "name": "Luxury Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Eco-Retreat Paradise"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Experience the jungle in luxury."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Book Your Stay"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Luxury Hero"
+    }
+  ]
+}
+{% endschema %}

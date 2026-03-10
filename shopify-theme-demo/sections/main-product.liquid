@@ -1,0 +1,50 @@
+<div class="product-page container">
+  <div class="product-grid">
+    <div class="product-media">
+      <img src="{{ product.featured_image | img_url: '1000x' }}" alt="{{ product.title }}">
+    </div>
+    
+    <div class="product-info">
+      <h1>{{ product.title }}</h1>
+      <div class="price">{{ product.price | money }} per night</div>
+      <div class="description">{{ product.description }}</div>
+
+      {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        
+        <div class="booking-inputs">
+          <label for="check-in">Check-in Date</label>
+          <input type="date" id="check-in" name="properties[Check-in]" required>
+          
+          <label for="check-out">Check-out Date</label>
+          <input type="date" id="check-out" name="properties[Check-out]" required>
+        </div>
+
+        <button type="submit" class="btn-book">Confirm Booking</button>
+      {% endform %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .container { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
+  .product-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 50px; }
+  .product-media img { width: 100%; border-radius: 8px; }
+  .price { font-size: 1.5rem; color: var(--accent-color); margin: 20px 0; font-weight: 600; }
+  .booking-inputs { margin: 30px 0; display: grid; gap: 10px; }
+  .booking-inputs input { padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+  .btn-book {
+    width: 100%;
+    padding: 20px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  @media (max-width: 768px) {
+    .product-grid { grid-template-columns: 1fr; }
+  }
+</style>

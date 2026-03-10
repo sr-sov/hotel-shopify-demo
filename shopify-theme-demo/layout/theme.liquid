@@ -1,0 +1,59 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <title>{{ page_title }}</title>
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+    {{ content_for_header }}
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --primary-color: #2c3e50;
+        --accent-color: #a3895d;
+        --bg-color: #fdfcf9;
+        --text-color: #1a1a1a;
+      }
+      body {
+        margin: 0;
+        font-family: 'Outfit', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+      }
+      header {
+        padding: 20px 5%;
+        background: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      }
+      .logo { font-weight: 600; font-size: 1.5rem; color: var(--primary-color); text-decoration: none; }
+      nav a { margin-left: 20px; text-decoration: none; color: var(--text-color); font-weight: 400; }
+      nav a:hover { color: var(--accent-color); }
+      footer { padding: 50px 5%; background: var(--primary-color); color: white; text-align: center; margin-top: 50px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/" class="logo">ECO-RESORT DEMO</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/collections/all">Book a Room</a>
+      </nav>
+    </header>
+
+    <main role="main">
+      {{ content_for_layout }}
+    </main>
+
+    <footer>
+      <p>&copy; {{ 'now' | date: "%Y" }} Your Luxury Eco-Resort. Built with Shopify.</p>
+    </footer>
+  </body>
+</html>
