@@ -186,13 +186,22 @@ img {
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 18px 48px;
-  transition: all 0.4s ease;
+  padding: 12px 48px;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  background: rgba(255, 255, 255, 0.98);
+  border-bottom: 1px solid var(--border-light);
+  box-shadow: var(--shadow);
+}
+
+.nav-hero {
   background: transparent;
+  border-bottom: none;
+  box-shadow: none;
+  padding: 24px 48px;
 }
 
 .nav.scrolled {
-  background: rgba(247, 249, 244, 0.96);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
   padding: 12px 48px;
   border-bottom: 1px solid var(--border-light);
@@ -216,6 +225,10 @@ img {
   transition: color var(--transition);
 }
 
+.nav-hero .nav-logo {
+  color: white;
+}
+
 .nav.scrolled .nav-logo {
   color: var(--text);
 }
@@ -231,7 +244,11 @@ img {
   color: var(--text-secondary);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  transition: color var(--transition);
+  transition: all var(--transition);
+}
+
+.nav-hero .nav-links a {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .nav.scrolled .nav-links a {
@@ -240,6 +257,10 @@ img {
 
 .nav-links a:hover {
   color: var(--accent);
+}
+
+.nav-hero .nav-links a:hover {
+  color: white;
 }
 
 .nav.scrolled .nav-links a:hover {

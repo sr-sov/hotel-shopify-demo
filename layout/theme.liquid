@@ -26,7 +26,7 @@
   
   <body>
     <!-- Navigation -->
-    <nav class="nav" id="nav">
+    <nav class="nav {% if template == 'index' %}nav-hero{% endif %}" id="nav">
       <div class="nav-inner">
         <a href="/" class="nav-logo">{{ shop.name }}</a>
         <div class="nav-links">

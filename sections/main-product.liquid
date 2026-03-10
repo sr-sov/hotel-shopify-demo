@@ -98,19 +98,25 @@
   position: absolute;
   bottom: 24px;
   right: 24px;
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(10px);
+  background: var(--white);
+  color: var(--text);
   padding: 10px 20px;
   border-radius: 100px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--text);
   box-shadow: var(--shadow-lg);
   display: flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  pointer-events: none; /* purely visual for now unless clicked on container */
+  z-index: 10;
+  transition: all var(--transition);
+  border: 1px solid var(--border-light);
+}
+
+.show-all-btn:hover {
+  background: var(--bg-alt);
+  transform: translateY(-2px);
 }
 
 /* Split Content Area */
@@ -343,18 +349,18 @@
   <!-- Masonry / Extended Gallery -->
   {% assign image_count = product.images.size | at_most: 5 %}
   {% if image_count == 0 %}{% assign image_count = 3 %}{% endif %}
-  <div class="room-gallery count-{{ image_count }}">
+  <div class="room-gallery count-{{ image_count }}" style="position: relative;">
     {% if product.images.size > 0 %}
       {% for image in product.images limit: 5 %}
         <div class="gallery-item">
           <img src="{{ image | image_url: width: 1200 }}" alt="{{ image.alt | default: product.title | escape }}" loading="lazy">
-          {% if forloop.index == 5 and product.images.size > 5 %}
-            <div class="show-all-btn">
-              <span style="font-size: 16px;">⊞</span> Show all {{ product.images.size }} photos
-            </div>
-          {% endif %}
         </div>
       {% endfor %}
+      {% if product.images.size > 1 %}
+        <div class="show-all-btn">
+          <span>⊞</span> Show all {{ product.images.size }} photos
+        </div>
+      {% endif %}
     {% else %}
       <div class="gallery-item">{{ 'product-1' | placeholder_svg_tag: 'gallery-main' }}</div>
       <div class="gallery-item">{{ 'product-2' | placeholder_svg_tag: 'gallery-main' }}</div>
