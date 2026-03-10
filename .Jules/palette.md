@@ -1,0 +1,3 @@
+## 2024-03-09 - Adding explicit label associations in vanilla HTML forms
+**Learning:** Discovered that the vanilla HTML booking form lacked explicit `<label for="...">` associations with their respective `<input>` and `<select>` elements. While visual layout implied the connection, screen readers and standard browser behavior (clicking a label to focus the input) depend on these explicit associations. This pattern is common in older or purely visually-designed templates.
+**Action:** Always verify that `<label>` elements have a `for` attribute matching the ID of their corresponding input, especially in custom-built vanilla HTML forms, to ensure baseline accessibility and improved hit areas on mobile.
