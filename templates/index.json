@@ -1,10 +1,117 @@
 {
   "sections": {
     "hero": {
-      "type": "hero"
+      "type": "hero",
+      "settings": {}
+    },
+    "welcome": {
+      "type": "welcome-split",
+      "settings": {
+        "title": "An escape designed for those who appreciate the extraordinary",
+        "split1_tag": "Sustainable Design",
+        "split1_title": "Harmonious Architecture",
+        "split1_desc": "Our villas are designed to blur the line between indoor comfort and outdoor beauty.",
+        "split2_tag": "Culinary Journey",
+        "split2_title": "Taste the Rainforest",
+        "split2_desc": "Our farm-to-table dining philosophy ensures every meal is a celebration of local flavors."
+      }
+    },
+    "rooms": {
+      "type": "featured-rooms",
+      "settings": {
+        "title": "Your Private Sanctuary"
+      },
+      "blocks": {
+        "room1": {
+          "type": "room",
+          "settings": {
+            "title": "Rainforest Suite",
+            "desc": "Floor-to-ceiling windows overlooking the canopy. Private terrace with plunge pool.",
+            "meta1": "👥 2 Guests",
+            "meta2": "📐 85 m²",
+            "meta3": "🌿 Garden View",
+            "price": "$420",
+            "badge": "Popular"
+          }
+        },
+        "room2": {
+          "type": "room",
+          "settings": {
+            "title": "Ocean View Room",
+            "desc": "Panoramic ocean views from your private balcony. Spa-inspired bathroom.",
+            "meta1": "👥 2 Guests",
+            "meta2": "🌊 Ocean View",
+            "price": "$310",
+            "badge": ""
+          }
+        },
+        "room3": {
+          "type": "room",
+          "settings": {
+            "title": "Garden Villa",
+            "desc": "Secluded villa surrounded by tropical gardens. Open-air living space.",
+            "meta1": "👥 4 Guests",
+            "meta2": "🌺 Garden",
+            "price": "$550",
+            "badge": "Large"
+          }
+        }
+      },
+      "block_order": [
+        "room1",
+        "room2",
+        "room3"
+      ]
+    },
+    "amenities": {
+      "type": "amenities",
+      "settings": {},
+      "blocks": {
+        "spa": {
+          "type": "amenity",
+          "settings": {
+            "icon": "🧖",
+            "title": "Spa & Wellness",
+            "desc": "Full-service spa with traditional and modern treatments in a rainforest setting"
+          }
+        },
+        "pool": {
+          "type": "amenity",
+          "settings": {
+            "icon": "🏊",
+            "title": "Infinity Pool",
+            "desc": "Heated infinity pool overlooking the valley with poolside dining service"
+          }
+        },
+        "dining": {
+          "type": "amenity",
+          "settings": {
+            "icon": "🍽️",
+            "title": "Fine Dining",
+            "desc": "Farm-to-table restaurant featuring seasonal menus from local ingredients"
+          }
+        },
+        "tours": {
+          "type": "amenity",
+          "settings": {
+            "icon": "🌄",
+            "title": "Guided Tours",
+            "desc": "Curated nature walks, waterfall hikes, and cultural experiences with local guides"
+          }
+        }
+      },
+      "block_order": [
+        "spa",
+        "pool",
+        "dining",
+        "tours"
+      ]
     }
   },
   "order": [
-    "hero"
+    "hero",
+    "welcome",
+    "rooms",
+    "amenities"
   ]
 }

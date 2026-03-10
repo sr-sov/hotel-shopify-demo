@@ -1,39 +1,85 @@
-<section class="hero-section" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('{{ section.settings.image | img_url: '2000x' }}');">
+<section class="hero">
+  <div class="hero-image-wrapper">
+    {% if section.settings.image %}
+      <img src="{{ section.settings.image | img_url: 'master' }}" alt="{{ section.settings.heading }}" class="hero-image" loading="lazy">
+    {% else %}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'hero-image' }}
+    {% endif %}
+    <div class="hero-overlay"></div>
+  </div>
+
   <div class="hero-content">
-    <h1>{{ section.settings.heading }}</h1>
-    <p>{{ section.settings.subheading }}</p>
-    <a href="{{ section.settings.button_link }}" class="btn">{{ section.settings.button_text }}</a>
+    {% if section.settings.tagline != blank %}
+      <div class="hero-tagline">{{ section.settings.tagline }}</div>
+    {% endif %}
+    
+    {% if section.settings.heading != blank %}
+      <h1 class="hero-title">{{ section.settings.heading }}</h1>
+    {% endif %}
+    
+    {% if section.settings.subheading != blank %}
+      <p class="hero-subtitle">{{ section.settings.subheading }}</p>
+    {% endif %}
+  </div>
+
+  <!-- Booking Bar Overlay -->
+  <div class="booking-bar">
+    <div class="booking-field">
+      <label>Check In</label>
+      <input type="date" id="hero-checkin" name="checkin">
+    </div>
+    <div class="booking-field">
+      <label>Check Out</label>
+      <input type="date" id="hero-checkout" name="checkout">
+    </div>
+    <div class="booking-field">
+      <label>Guests</label>
+      <select id="hero-guests">
+        <option>1 Adult</option>
+        <option selected>2 Adults</option>
+        <option>2 Adults, 1 Child</option>
+        <option>2 Adults, 2 Children</option>
+      </select>
+    </div>
+    <a href="/collections/all" class="booking-btn" onclick="return passDatesToCatalog()">Check Availability</a>
   </div>
 </section>
 
-<style>
-  .hero-section {
-    height: 80vh;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
+<script>
+  // Simple script to pass selected dates to the catalog page via URL parameters
+  function passDatesToCatalog() {
+    const checkin = document.getElementById('hero-checkin').value;
+    const checkout = document.getElementById('hero-checkout').value;
+    
+    if (checkin && checkout) {
+      window.location.href = `/collections/all?checkin=${checkin}&checkout=${checkout}`;
+      return false; // Prevent default link behavior
+    }
+    return true; // Let the link work normally if no dates selected
   }
-  .hero-content h1 { font-size: 3.5rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 2px; }
-  .hero-content p { font-size: 1.25rem; margin-bottom: 2rem; max-width: 600px; }
-  .btn {
-    background: var(--accent-color);
-    color: white;
-    padding: 15px 40px;
-    text-decoration: none;
-    font-weight: 600;
-    border-radius: 4px;
-    transition: background 0.3s;
-  }
-  .btn:hover { background: #8e724a; }
-</style>
+
+  // Set minimum dates to today
+  document.addEventListener('DOMContentLoaded', () => {
+    const today = new Date().toISOString().split('T')[0];
+    const checkin = document.getElementById('hero-checkin');
+    const checkout = document.getElementById('hero-checkout');
+    
+    if (checkin) {
+      checkin.min = today;
+      checkin.addEventListener('change', (e) => {
+        checkout.min = e.target.value;
+        if (checkout.value && checkout.value < e.target.value) {
+          checkout.value = e.target.value;
+        }
+      });
+    }
+    if (checkout) checkout.min = today;
+  });
+</script>
 
 {% schema %}
 {
-  "name": "Luxury Hero",
+  "name": "Luxury Hero Focus",
   "settings": [
     {
       "type": "image_picker",
@@ -42,31 +88,27 @@
     },
     {
       "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "A Luxury Eco-Retreat Experience"
+    },
+    {
+      "type": "html",
       "id": "heading",
       "label": "Heading",
-      "default": "Eco-Retreat Paradise"
+      "info": "Use <em> tags for italicized keywords",
+      "default": "Where Nature<br>Meets <em>Luxury</em>"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Experience the jungle in luxury."
-    },
-    {
-      "type": "text",
-      "id": "button_text",
-      "label": "Button Text",
-      "default": "Book Your Stay"
-    },
-    {
-      "type": "url",
-      "id": "button_link",
-      "label": "Button Link"
+      "default": "Nestled among pristine landscapes, Paradise Cove offers an intimate escape where natural beauty and refined comfort exist in perfect harmony."
     }
   ],
   "presets": [
     {
-      "name": "Luxury Hero"
+      "name": "Luxury Hero Focus"
     }
   ]
 }
