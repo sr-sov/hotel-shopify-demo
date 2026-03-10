@@ -12,8 +12,8 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "tagline": "A Luxury Eco-Retreat Experience",
-        "heading": "Where Nature<br>Meets <em>Luxury</em>",
+        "tagline": "A Luxury Eco-Retreat Experience TEST",
+        "heading": "Where Nature<br>Meets <em>Luxury</em>TEST",
         "subheading": "Nestled among pristine landscapes, Paradise Cove offers an intimate escape where natural beauty and refined comfort exist in perfect harmony."
       }
     },
@@ -22,12 +22,12 @@
       "blocks": {
         "room_zHqCNz": {
           "type": "room",
-          "name": "River View Room",
+          "name": "TEST ROOM",
           "settings": {
             "product": "river-view-room",
             "image": "shopify://shop_images/room-premium.png",
-            "title": "Riverview Room",
-            "desc": "Wake up to panoramic river views from your private balcony. This room features a king-size bed with premium linens, a spa-inspired bathroom, and seamless access to our pristine river area.",
+            "title": "TEST ROOM",
+            "desc": "Wake up to panoramic river views from your private balcony. This room features a king-size bed with premium linens, a spa-inspired bathroom, and seamless access to our pristine river area. TEST",
             "price": "PHP3100",
             "meta1": "👥 2 Guests",
             "meta2": "📐 85 m²",
