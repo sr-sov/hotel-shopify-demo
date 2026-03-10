@@ -371,7 +371,7 @@
           </div>
         </div>
 
-        {% form 'product', product, class: 'booking-form' %}
+        {% form 'product', product, class: 'booking-form', data-type: 'add-to-cart-form' %}
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
           
           <div style="display: flex; gap: 12px;">
