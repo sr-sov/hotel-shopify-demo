@@ -1,117 +1,86 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero",
-      "settings": {}
-    },
-    "welcome": {
-      "type": "welcome-split",
       "settings": {
-        "title": "An escape designed for those who appreciate the extraordinary",
-        "split1_tag": "Sustainable Design",
-        "split1_title": "Harmonious Architecture",
-        "split1_desc": "Our villas are designed to blur the line between indoor comfort and outdoor beauty.",
-        "split2_tag": "Culinary Journey",
-        "split2_title": "Taste the Rainforest",
-        "split2_desc": "Our farm-to-table dining philosophy ensures every meal is a celebration of local flavors."
+        "tagline": "A Luxury Eco-Retreat Experience",
+        "heading": "Where Nature<br>Meets <em>Luxury</em>",
+        "subheading": "Nestled among pristine landscapes, Paradise Cove offers an intimate escape where natural beauty and refined comfort exist in perfect harmony."
       }
     },
-    "rooms": {
+    "featured_rooms_94hkFH": {
       "type": "featured-rooms",
-      "settings": {
-        "title": "Your Private Sanctuary"
-      },
       "blocks": {
-        "room1": {
+        "room_zHqCNz": {
           "type": "room",
+          "name": "River View Room",
           "settings": {
-            "title": "Rainforest Suite",
-            "desc": "Floor-to-ceiling windows overlooking the canopy. Private terrace with plunge pool.",
+            "product": "river-view-room",
+            "image": "shopify://shop_images/room-premium.png",
+            "title": "Riverview Room",
+            "desc": "Wake up to panoramic river views from your private balcony. This room features a king-size bed with premium linens, a spa-inspired bathroom, and seamless access to our pristine river area.",
+            "price": "PHP3100",
             "meta1": "👥 2 Guests",
             "meta2": "📐 85 m²",
-            "meta3": "🌿 Garden View",
-            "price": "$420",
+            "meta3": "🌿 River View",
             "badge": "Popular"
           }
         },
-        "room2": {
+        "room_whNrrD": {
           "type": "room",
+          "name": "Rainforest Suite",
           "settings": {
-            "title": "Ocean View Room",
-            "desc": "Panoramic ocean views from your private balcony. Spa-inspired bathroom.",
+            "product": "river-view-room",
+            "image": "shopify://shop_images/room-suite.png",
+            "title": "Rainforest Suite",
+            "desc": "Stay in the heart of the rainforest. This beautifully appointed suite features floor-to-ceiling windows, a private plunge pool, and sustainable luxury finishes designed to blend perfectly with the natural surroundings. Experience unparalleled tranquility while maintaining access to world-class resort amenities.",
+            "price": "$420",
             "meta1": "👥 2 Guests",
-            "meta2": "🌊 Ocean View",
-            "price": "$310",
-            "badge": ""
+            "meta2": "📐 85 m²",
+            "meta3": "🌿 Garden View",
+            "badge": "Popular"
           }
         },
-        "room3": {
+        "room_UUyQqf": {
           "type": "room",
           "settings": {
+            "product": "",
+            "image": "shopify://shop_images/pool.png",
             "title": "Garden Villa",
-            "desc": "Secluded villa surrounded by tropical gardens. Open-air living space.",
-            "meta1": "👥 4 Guests",
-            "meta2": "🌺 Garden",
-            "price": "$550",
-            "badge": "Large"
+            "desc": "Floor-to-ceiling windows overlooking the canopy.",
+            "price": "$420",
+            "meta1": "👥 2 Guests",
+            "meta2": "📐 85 m²",
+            "meta3": "🌿 Garden View",
+            "badge": "Popular"
           }
         }
       },
       "block_order": [
-        "room1",
-        "room2",
-        "room3"
-      ]
-    },
-    "amenities": {
-      "type": "amenities",
-      "settings": {},
-      "blocks": {
-        "spa": {
-          "type": "amenity",
-          "settings": {
-            "icon": "🧖",
-            "title": "Spa & Wellness",
-            "desc": "Full-service spa with traditional and modern treatments in a rainforest setting"
-          }
-        },
-        "pool": {
-          "type": "amenity",
-          "settings": {
-            "icon": "🏊",
-            "title": "Infinity Pool",
-            "desc": "Heated infinity pool overlooking the valley with poolside dining service"
-          }
-        },
-        "dining": {
-          "type": "amenity",
-          "settings": {
-            "icon": "🍽️",
-            "title": "Fine Dining",
-            "desc": "Farm-to-table restaurant featuring seasonal menus from local ingredients"
-          }
-        },
-        "tours": {
-          "type": "amenity",
-          "settings": {
-            "icon": "🌄",
-            "title": "Guided Tours",
-            "desc": "Curated nature walks, waterfall hikes, and cultural experiences with local guides"
-          }
-        }
-      },
-      "block_order": [
-        "spa",
-        "pool",
-        "dining",
-        "tours"
-      ]
+        "room_zHqCNz",
+        "room_whNrrD",
+        "room_UUyQqf"
+      ],
+      "name": "Featured Rooms",
+      "settings": {
+        "tag": "Accommodations",
+        "title": "Your Private Sanctuary",
+        "desc": "Discover our collection of thoughtfully designed villas and suites.",
+        "show_view_all": true
+      }
     }
   },
   "order": [
     "hero",
-    "welcome",
-    "rooms",
-    "amenities"
+    "featured_rooms_94hkFH"
   ]
 }
