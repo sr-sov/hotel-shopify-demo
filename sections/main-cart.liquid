@@ -232,7 +232,7 @@
               </div>
 
               <div class="cart-item-remove">
-                <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">Remove</a>
+                <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" aria-label="Remove {{ item.product.title | escape }} from cart">Remove</a>
               </div>
             </div>
           {% endfor %}
