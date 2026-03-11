@@ -2731,10 +2731,24 @@
       });
 
       // Attach actual Shopify checkout to the button INSIDE the modal
-      document.getElementById('modalCheckoutBtn').addEventListener('click', () => {
+      document.getElementById('modalCheckoutBtn').addEventListener('click', async (e) => {
         if (activeRoomForCheckout) {
-          const productId = ROOM_PRODUCTS[activeRoomForCheckout];
-          createShopifyCheckout(productId, activeRoomForCheckout);
+          const btn = e.currentTarget;
+          const originalText = btn.textContent;
+          btn.textContent = 'Connecting...';
+          btn.disabled = true;
+          btn.classList.add('opacity-70', 'cursor-wait');
+          btn.setAttribute('aria-busy', 'true');
+
+          try {
+            const productId = ROOM_PRODUCTS[activeRoomForCheckout];
+            await createShopifyCheckout(productId, activeRoomForCheckout);
+          } finally {
+            btn.textContent = originalText;
+            btn.disabled = false;
+            btn.classList.remove('opacity-70', 'cursor-wait');
+            btn.removeAttribute('aria-busy');
+          }
         }
       });
 
