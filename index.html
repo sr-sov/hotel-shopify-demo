@@ -1545,6 +1545,15 @@
       }
     }
 
+    /* === Spin Animation === */
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .spin {
+      display: inline-block;
+      animation: spin 1s linear infinite;
+    }
+
     /* === Premium Room Modal === */
     .room-modal {
       position: fixed;
@@ -2731,10 +2740,31 @@
       });
 
       // Attach actual Shopify checkout to the button INSIDE the modal
-      document.getElementById('modalCheckoutBtn').addEventListener('click', () => {
+      document.getElementById('modalCheckoutBtn').addEventListener('click', async (e) => {
         if (activeRoomForCheckout) {
+          const btn = e.currentTarget;
+          const originalText = btn.textContent;
+
+          btn.textContent = '';
+          const spinner = document.createElement('span');
+          spinner.className = 'spin';
+          spinner.textContent = '↻';
+          btn.appendChild(spinner);
+          btn.appendChild(document.createTextNode(' Processing...'));
+
+          btn.disabled = true;
+          btn.setAttribute('aria-busy', 'true');
+          btn.style.cursor = 'wait';
+
           const productId = ROOM_PRODUCTS[activeRoomForCheckout];
-          createShopifyCheckout(productId, activeRoomForCheckout);
+          try {
+            await createShopifyCheckout(productId, activeRoomForCheckout);
+          } finally {
+            btn.textContent = originalText;
+            btn.disabled = false;
+            btn.removeAttribute('aria-busy');
+            btn.style.cursor = '';
+          }
         }
       });
 
