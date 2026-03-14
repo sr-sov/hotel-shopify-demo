@@ -2485,9 +2485,27 @@
 
       // Shopify checkout with line item properties for booking details
       async function createShopifyCheckout(productId, roomName) {
+        const btn = document.getElementById('modalCheckoutBtn');
+        const originalHTML = btn ? btn.innerHTML : '';
+        if (btn) {
+          btn.disabled = true;
+          btn.setAttribute('aria-busy', 'true');
+          btn.style.cursor = 'wait';
+          btn.textContent = 'Processing... ';
+          const spinner = document.createElement('span');
+          spinner.textContent = '⏳';
+          btn.appendChild(spinner);
+        }
+
         if (typeof ShopifyBuy === 'undefined') {
           alert('Error: ShopifyBuy SDK failed to load. Check your internet connection or ad blocker.');
           showBookingModal(roomName);
+          if (btn) {
+            btn.disabled = false;
+            btn.removeAttribute('aria-busy');
+            btn.style.cursor = '';
+            btn.innerHTML = originalHTML;
+          }
           return;
         }
 
@@ -2533,6 +2551,13 @@
 
           alert('Shopify SDK Error Details:\n\n' + errorMsg + '\n\nPlease check the browser console for the full object.');
           showBookingModal(roomName);
+        } finally {
+          if (btn) {
+            btn.disabled = false;
+            btn.removeAttribute('aria-busy');
+            btn.style.cursor = '';
+            btn.innerHTML = originalHTML;
+          }
         }
       }
 
