@@ -1,3 +1,7 @@
 ## 2024-05-18 - Added keyboard navigation and ARIA support to Lightbox/Modal
 **Learning:** Adding complex custom modals/lightboxes in vanilla HTML/JS often leads to poor accessibility if ARIA attributes and keyboard event listeners are omitted. When a custom modal opens, it's critical to programmatically set focus (`.focus()`) to an element inside it (like the close button) so screen readers and keyboard users understand the context has changed. Furthermore, implementing global keydown listeners for Escape (to close) and Arrow keys (to navigate carousels/lightboxes) drastically improves usability.
 **Action:** Always map the Escape key to close custom dialogs and modals, add `role="dialog"` and `aria-modal="true"` to custom popups, and explicitly manage focus when a modal mounts and unmounts.
+
+## 2024-05-18 - Added Async Feedback to Checkout Button
+**Learning:** For asynchronous operations, specifically checkouts, providing immediate feedback by disabling the button (`disabled=true`), setting `aria-busy="true"`, and updating the cursor to `wait` avoids user frustration or double submissions. Appending a visual loading indicator securely using native DOM methods (`textContent`, `document.createElement`) prevents XSS risks.
+**Action:** Always wrap async checkout actions in a `try...catch...finally` block to ensure UI states (loading spinners, disabled attributes) are reverted in the `finally` block regardless of success or failure.
