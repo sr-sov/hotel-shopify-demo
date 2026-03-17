@@ -38,12 +38,17 @@ In **Shopify Admin → Products**, create one product per room:
 
 ### Step 4: Connect to the Website
 
-Open `shopify-config.js` and update this section:
+To maintain security, **do not hardcode your Storefront Access Token** in `shopify-config.js`. Instead, ensure it is provided at runtime via the global `window` object.
+
+1. Create a `.env` file from the provided `.env.example`.
+2. Ensure your build or deployment process injects `SHOPIFY_DOMAIN` and `SHOPIFY_TOKEN` into the `window` object of the client-side code.
+
+In `shopify-config.js`, the configuration is pre-wired to read from these global variables:
 
 ```javascript
 const SHOP_CONFIG = {
-  domain: 'your-store.myshopify.com',       // ← Replace with your store domain
-  storefrontAccessToken: 'your-token-here',  // ← Replace with your token
+  domain: window.SHOPIFY_DOMAIN || 'hotel-ptp.myshopify.com',
+  storefrontAccessToken: window.SHOPIFY_TOKEN || '',
 };
 ```
 
