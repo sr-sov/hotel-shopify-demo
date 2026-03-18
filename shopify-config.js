@@ -7,7 +7,7 @@
 
 const SHOP_CONFIG = {
   domain: window.SHOPIFY_DOMAIN || 'hotel-ptp.myshopify.com',
-  storefrontAccessToken: window.SHOPIFY_TOKEN || ['39e8d70c', '76584487', '83ee53a5', '0c32ad5b'].join(''),
+  storefrontAccessToken: window.SHOPIFY_TOKEN || '',
 };
 
 // Map room buttons to Shopify product GIDs
