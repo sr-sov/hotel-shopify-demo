@@ -5,3 +5,7 @@
 ## 2024-05-18 - Added loading state feedback to async checkout button
 **Learning:** For user actions that trigger asynchronous operations (like API calls or opening checkouts), providing immediate visual feedback is crucial to prevent multiple submissions and communicate that the application is working. While doing this in vanilla JS, modifying `.innerHTML` to inject a loading spinner and restoring the original HTML afterwards is an effective way to preserve inner icons or styling. Furthermore, modifying the `disabled` state, setting `aria-busy="true"`, and changing the cursor to `wait` are simple yet vital additions to ensure robust UX and accessibility during the loading phase.
 **Action:** Always provide loading states for async actions. In vanilla JS contexts, carefully stash and restore original element markup when modifying it, and remember to include ARIA attributes like `aria-busy="true"` alongside native `disabled` states for accessibility.
+
+## 2024-05-18 - Restored focus after closing modals for keyboard navigation
+**Learning:** Custom modals disrupt keyboard navigation by failing to return focus to the element that triggered the modal. This creates a frustrating experience where closing a dialog resets the user's tab order back to the top of the document.
+**Action:** When implementing custom modals and lightboxes, always cache the `document.activeElement` before the modal opens and explicitly call `.focus()` on the cached element when the modal is closed to preserve the navigation flow.

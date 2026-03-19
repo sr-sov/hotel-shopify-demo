@@ -2582,15 +2582,18 @@
       };
 
       let activeRoomForCheckout = null;
+      let activeElementBeforeModal = null;
       const roomModal = document.getElementById('roomModal');
 
       let currentLightboxImages = [];
       let currentLightboxIndex = 0;
+      let activeElementBeforeLightbox = null;
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightboxImg');
       const lightboxCounter = document.getElementById('lightboxCounter');
 
       function openLightbox(images, startIndex) {
+        activeElementBeforeLightbox = document.activeElement;
         currentLightboxImages = images;
         currentLightboxIndex = startIndex || 0;
         updateLightbox();
@@ -2605,6 +2608,9 @@
 
       function closeLightbox() {
         lightbox.classList.remove('active');
+        if (activeElementBeforeLightbox) {
+          activeElementBeforeLightbox.focus();
+        }
       }
 
       function lightboxPrevImage() {
@@ -2626,6 +2632,7 @@
         const data = ROOM_DATA[roomName];
         if (!data) return;
 
+        activeElementBeforeModal = document.activeElement;
         activeRoomForCheckout = roomName;
         document.getElementById('modalTitle').textContent = roomName;
         document.getElementById('modalPrice').textContent = data.price;
@@ -2692,6 +2699,9 @@
         // Restore demo banner
         const banner = document.getElementById('demoBanner');
         if (banner) banner.style.zIndex = '200';
+        if (activeElementBeforeModal) {
+          activeElementBeforeModal.focus();
+        }
       }
 
       // View All Photos button
@@ -2720,9 +2730,17 @@
 
         // Make the whole card clickable for the premium feel
         card.style.cursor = 'pointer';
+        card.tabIndex = 0;
         card.addEventListener('click', (e) => {
           e.preventDefault();
           openRoomModal(roomName);
+        });
+
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openRoomModal(roomName);
+          }
         });
 
         // Also ensure button clicks open modal and don't bubble
