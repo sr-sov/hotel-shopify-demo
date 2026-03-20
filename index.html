@@ -1938,7 +1938,7 @@
         <a href="#contact">Contact</a>
       </div>
       <a href="#book" class="nav-cta">Book Now</a>
-      <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
         <span></span>
         <span></span>
         <span></span>
@@ -2829,7 +2829,10 @@
       hamburger?.addEventListener('click', () => {
         hamburger.classList.toggle('active');
         mobileNav.classList.toggle('open');
-        document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+        const isOpen = mobileNav.classList.contains('open');
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
       });
 
       // Close mobile nav on link click
@@ -2838,6 +2841,8 @@
           hamburger.classList.remove('active');
           mobileNav.classList.remove('open');
           document.body.style.overflow = '';
+          hamburger.setAttribute('aria-expanded', 'false');
+          hamburger.setAttribute('aria-label', 'Open menu');
         });
       });
 
