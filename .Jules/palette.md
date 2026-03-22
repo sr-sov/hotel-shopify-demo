@@ -5,3 +5,7 @@
 ## 2024-05-18 - Added loading state feedback to async checkout button
 **Learning:** For user actions that trigger asynchronous operations (like API calls or opening checkouts), providing immediate visual feedback is crucial to prevent multiple submissions and communicate that the application is working. While doing this in vanilla JS, modifying `.innerHTML` to inject a loading spinner and restoring the original HTML afterwards is an effective way to preserve inner icons or styling. Furthermore, modifying the `disabled` state, setting `aria-busy="true"`, and changing the cursor to `wait` are simple yet vital additions to ensure robust UX and accessibility during the loading phase.
 **Action:** Always provide loading states for async actions. In vanilla JS contexts, carefully stash and restore original element markup when modifying it, and remember to include ARIA attributes like `aria-busy="true"` alongside native `disabled` states for accessibility.
+
+## 2024-05-18 - Mobile Hamburger Menu Accessibility
+**Learning:** Custom hamburger menus must synchronize their visual open/closed states with `aria-expanded` and `aria-label` attributes for screen readers. Additionally, mobile overlays should be closeable via the Escape key, restoring focus back to the toggle button.
+**Action:** Always map the Escape key to close navigation overlays, explicitly reset ARIA states when inner links are clicked or the Escape key is used, and update `aria-expanded` dynamically.
