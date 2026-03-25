@@ -2590,7 +2590,10 @@
       const lightboxImg = document.getElementById('lightboxImg');
       const lightboxCounter = document.getElementById('lightboxCounter');
 
+      let lastFocusedElementBeforeLightbox = null;
+
       function openLightbox(images, startIndex) {
+        lastFocusedElementBeforeLightbox = document.activeElement;
         currentLightboxImages = images;
         currentLightboxIndex = startIndex || 0;
         updateLightbox();
@@ -2605,6 +2608,9 @@
 
       function closeLightbox() {
         lightbox.classList.remove('active');
+        if (lastFocusedElementBeforeLightbox) {
+          lastFocusedElementBeforeLightbox.focus();
+        }
       }
 
       function lightboxPrevImage() {
@@ -2622,9 +2628,13 @@
       document.getElementById('lightboxNext').addEventListener('click', lightboxNextImage);
       lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
 
+      let lastFocusedElementBeforeModal = null;
+
       function openRoomModal(roomName) {
         const data = ROOM_DATA[roomName];
         if (!data) return;
+
+        lastFocusedElementBeforeModal = document.activeElement;
 
         activeRoomForCheckout = roomName;
         document.getElementById('modalTitle').textContent = roomName;
@@ -2692,6 +2702,9 @@
         // Restore demo banner
         const banner = document.getElementById('demoBanner');
         if (banner) banner.style.zIndex = '200';
+        if (lastFocusedElementBeforeModal) {
+          lastFocusedElementBeforeModal.focus();
+        }
       }
 
       // View All Photos button

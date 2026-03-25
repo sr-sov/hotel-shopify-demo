@@ -13,6 +13,14 @@ const { chromium } = require('playwright');
 
   console.log('Clicking the first room card to open modal...');
   const firstRoomCard = page.locator('.room-card').first();
+
+  // Wait for the room card to be visible
+  await firstRoomCard.waitFor({ state: 'visible' });
+
+  // Get original active element before click
+  await firstRoomCard.focus();
+  const focusedBeforeModal = await page.evaluate(() => document.activeElement.outerHTML);
+
   await firstRoomCard.click();
 
   console.log('Checking modal visibility...');
@@ -44,6 +52,14 @@ const { chromium } = require('playwright');
     console.error('❌ Room modal was NOT closed via Escape key.');
   }
 
+  const focusedAfterModalClose = await page.evaluate(() => document.activeElement.outerHTML);
+  if (focusedAfterModalClose === focusedBeforeModal) {
+    console.log('✅ Focus restored successfully after modal closed.');
+  } else {
+    console.error('❌ Focus was NOT restored after modal closed.');
+    console.error(`Expected:\n${focusedBeforeModal}\nGot:\n${focusedAfterModalClose}`);
+  }
+
   console.log('Testing lightbox keyboard interaction...');
 
   // Re-open modal
@@ -51,7 +67,11 @@ const { chromium } = require('playwright');
   await page.waitForSelector('#roomModal.active', { state: 'visible' });
 
   console.log('Clicking view all photos button...');
-  await page.locator('#viewAllPhotosBtn').click();
+  const viewAllPhotosBtn = page.locator('#viewAllPhotosBtn');
+  await viewAllPhotosBtn.waitFor({ state: 'visible' });
+  await viewAllPhotosBtn.focus();
+  const focusedBeforeLightbox = await page.evaluate(() => document.activeElement.outerHTML);
+  await viewAllPhotosBtn.click();
 
   console.log('Checking lightbox visibility...');
   await page.waitForSelector('#lightbox.active', { state: 'visible' });
@@ -80,6 +100,9 @@ const { chromium } = require('playwright');
   console.log('Testing Escape key to close lightbox...');
   await page.keyboard.press('Escape');
 
+  // wait a bit for transition
+  await page.waitForTimeout(500);
+
   const lightboxHidden = await page.evaluate(() => {
     return !document.getElementById('lightbox').classList.contains('active');
   });
@@ -88,6 +111,14 @@ const { chromium } = require('playwright');
     console.log('✅ Lightbox was closed via Escape key.');
   } else {
     console.error('❌ Lightbox was NOT closed via Escape key.');
+  }
+
+  const focusedAfterLightboxClose = await page.evaluate(() => document.activeElement.outerHTML);
+  if (focusedAfterLightboxClose === focusedBeforeLightbox) {
+    console.log('✅ Focus restored successfully after lightbox closed.');
+  } else {
+    console.error('❌ Focus was NOT restored after lightbox closed.');
+    console.error(`Expected:\n${focusedBeforeLightbox}\nGot:\n${focusedAfterLightboxClose}`);
   }
 
   await browser.close();
